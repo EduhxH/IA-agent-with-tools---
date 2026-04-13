@@ -1,4 +1,3 @@
-[🤖 Local AI Agent with Tool Use.md](https://github.com/user-attachments/files/26689456/Local.AI.Agent.with.Tool.Use.md)
 <div align="center">
 
 <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
