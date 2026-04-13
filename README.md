@@ -1,4 +1,3 @@
-
 <div align="center">
 
 <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
@@ -14,7 +13,7 @@
 # 🤖 Local AI Agent with Tool Use
 
 **An autonomous AI agent with tool use capabilities running 100% locally.**  
-No cloud SDKs. No LangChain. Just pure ReAct pattern implementation.
+No cloud SDKs. **No LangChain.** Just pure ReAct pattern implementation.
 
 > 🇺🇸 **Note:** The source code, including variables, functions, and comments, is written entirely in **American English**.
 
@@ -26,16 +25,15 @@ No cloud SDKs. No LangChain. Just pure ReAct pattern implementation.
 
 ## 🧩 About the Project
 
-This project is a deep dive into the **ReAct (Reasoning and Acting)** pattern, built from scratch without relying on high-level AI frameworks.
+This project is a deep dive into the **ReAct (Reasoning and Acting)** pattern, built from scratch without relying on high-level AI frameworks like LangChain.
 
 The goal was to create an agent that doesn't just talk, but actually **executes actions** to find information or perform tasks. It uses a manual implementation of the reasoning loop, where the LLM decides which tool to use, processes the output, and continues until it finds the final answer.
 
 Everything runs locally, ensuring privacy and a deep understanding of the agentic workflow:
 
-- Manual ReAct loop implementation
-- Real-time tool execution (Web Search, Calculator, etc.)
-- FastAPI-based backend for high performance
-- Modern React + Vite frontend for a smooth experience
+- **Pure Implementation:** Manual ReAct loop without LangChain or similar abstractions.
+- **Real-time Tools:** Execution of Web Search, Calculator, and File Reader.
+- **Modern Stack:** FastAPI-based backend and React 19 + Vite frontend.
 
 ---
 
@@ -59,14 +57,14 @@ LLM Final Answer (Result)
 
 ## ✨ Features
 
-- 🛠 **Manual ReAct Pattern** — Implementation of the reasoning loop without LangChain or similar SDKs
-- 🌐 **Web Search Tool** — Integrated with DuckDuckGo to find real-time information
-- 🔢 **Calculator Tool** — Accurate mathematical operations performed via code execution
-- 📂 **File Reader** — Capability to read and process local files for context
-- 🚀 **FastAPI Backend** — Lightweight and fast API to handle agent logic
-- 💻 **React UI** — Modern and responsive chat interface built with React 19 and Vite
-- 🔒 **100% Local** — Powered by Ollama, ensuring your data never leaves your machine
-- ⚡ **Real-time Interaction** — Seamless communication between the frontend and the agentic backend
+- 🛠 **Manual ReAct Pattern** — Implementation of the reasoning loop from scratch for full control.
+- 🌐 **Web Search Tool** — Integrated with DuckDuckGo to find real-time information.
+- 🔢 **Calculator Tool** — Accurate mathematical operations performed via code execution.
+- 📂 **File Reader** — Capability to read and process local files for context.
+- 🚀 **FastAPI Backend** — Lightweight and fast API to handle agent logic.
+- 💻 **React UI** — Modern and responsive chat interface built with React 19 and Vite.
+- 🔒 **100% Local** — Powered by Ollama, ensuring your data never leaves your machine.
+- ⚡ **Real-time Interaction** — Seamless communication between the frontend and the agentic backend.
 
 ---
 
@@ -173,21 +171,12 @@ agente-ia-local/
 
 ## 🧠 What I Learned
 
-- Deep understanding of the **ReAct pattern** and agentic reasoning
-- How to implement a tool-calling loop manually using system prompts
-- Integrating local LLMs (Ollama) with a web application
-- Building a decoupled architecture with **FastAPI** and **React**
-- Handling asynchronous tool execution and state management in the UI
-- Prompt engineering for consistent JSON/Structured outputs from LLMs
-
----
-
-## 🔮 Future Improvements
-
-- [ ] Support for multi-turn tool execution in a single turn
-- [ ] Integration with more specialized tools (Database, API connectors)
-- [ ] Dockerization for easier deployment
-- [ ] Support for streaming agent thoughts to the UI
+- Deep understanding of the **ReAct pattern** and agentic reasoning.
+- How to implement a tool-calling loop manually using system prompts.
+- Integrating local LLMs (Ollama) with a web application.
+- Building a decoupled architecture with **FastAPI** and **React**.
+- Handling asynchronous tool execution and state management in the UI.
+- Prompt engineering for consistent JSON/Structured outputs from LLMs.
 
 ---
 
