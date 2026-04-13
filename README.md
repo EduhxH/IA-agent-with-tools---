@@ -1,3 +1,4 @@
+
 <div align="center">
 
 <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
@@ -17,7 +18,7 @@ No cloud SDKs. No LangChain. Just pure ReAct pattern implementation.
 
 > 🇺🇸 **Note:** The source code, including variables, functions, and comments, is written entirely in **American English**.
 
-[How It Works](#-how-it-works) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Project Structure](#-project-structure)
+[How It Works](#-how-it-works) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Deployment](#-deployment) • [Project Structure](#-project-structure)
 
 </div>
 
@@ -135,6 +136,15 @@ uvicorn api.main:app --reload
 cd frontend
 npm run dev
 ```
+
+---
+
+## ☁️ Deployment
+
+This project is deployed on:
+
+- **Frontend (Vercel):** [https://ia-agent-with-tools-jz1bec9da-eduhxhs-projects.vercel.app/](https://ia-agent-with-tools-jz1bec9da-eduhxhs-projects.vercel.app/)
+- **Backend (Railway):** [ia-agent-with-tools-production.up.railway.app](ia-agent-with-tools-production.up.railway.app)
 
 ---
 
