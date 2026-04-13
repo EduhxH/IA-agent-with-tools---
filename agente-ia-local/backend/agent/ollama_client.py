@@ -1,26 +1,28 @@
-import requests
 import os
+import requests
 
-OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+MODEL = os.getenv("OLLAMA_MODEL", "llama3-8b-8192")
 
 def chat(messages: list, system_prompt: str = "") -> str:
-    payload = {
-        "model": MODEL,
-        "messages": messages,
-        "stream": False,
-        "options": {
-            "temperature": 0.1,
-            "num_predict": 2048
-        }
-    }
+    all_messages = []
     if system_prompt:
-        payload["system"] = system_prompt
+        all_messages.append({"role": "system", "content": system_prompt})
+    all_messages.extend(messages)
 
     response = requests.post(
-        f"{OLLAMA_URL}/api/chat",
-        json=payload,
-        timeout=120
+        "https://api.groq.com/openai/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {GROQ_API_KEY}",
+            "Content-Type": "application/json"
+        },
+        json={
+            "model": MODEL,
+            "messages": all_messages,
+            "temperature": 0.1,
+            "max_tokens": 2048
+        },
+        timeout=30
     )
     response.raise_for_status()
-    return response.json()["message"]["content"]
+    return response.json()["choices"][0]["message"]["content"]

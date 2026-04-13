@@ -41,7 +41,7 @@ export function Chat() {
         content: data.response,
         tool_calls: data.tool_calls
       }])
-    } catch (e) {
+    } catch {
       setMessages(prev => [...prev, {
         role: "assistant",
         content: "⚠ Could not reach the agent. Is Ollama running?\n\nRun: `ollama serve` in a terminal.",
