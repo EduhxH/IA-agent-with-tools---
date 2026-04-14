@@ -1,23 +1,24 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-<img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+<img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white" />
 <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+<img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+<img src="https://img.shields.io/badge/Groq-LLM%20API-F55036?style=for-the-badge" />
 <img src="https://img.shields.io/badge/Ollama-Local%20LLM-000000?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Vite-Frontend-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
-<img src="https://img.shields.io/badge/status-in%20development-yellow?style=for-the-badge" />
+<img src="https://img.shields.io/badge/ReAct-Tool%20Use-7C3AED?style=for-the-badge" />
+<img src="https://img.shields.io/badge/status-complete-brightgreen?style=for-the-badge" />
 
 <br/>
 <br/>
 
-# 🤖 Local AI Agent with Tool Use
+# 🤖 IA Agent with Tool Use
 
-**An autonomous AI agent with tool use capabilities running 100% locally.**  
-No cloud SDKs. **No LangChain.** Just pure ReAct pattern implementation.
+**An AI agent that reasons, searches, calculates and reads files.**  
+Implements the ReAct pattern manually — no LangChain, no shortcuts.
 
-> 🇺🇸 **Note:** The source code, including variables, functions, and comments, is written entirely in **American English**.
+> ⚠️ **Note:** The source code, including variables, functions, and comments, is written entirely in **American English**.
 
-[How It Works](#-how-it-works) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Deployment](#-deployment) • [Project Structure](#-project-structure)
+[How It Works](#-how-it-works) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Project Structure](#-project-structure) • [Deploy](#-deploy)
 
 </div>
 
@@ -25,46 +26,51 @@ No cloud SDKs. **No LangChain.** Just pure ReAct pattern implementation.
 
 ## 🧩 About the Project
 
-This project is a deep dive into the **ReAct (Reasoning and Acting)** pattern, built from scratch without relying on high-level AI frameworks like LangChain.
+This project is a hands-on exploration of **AI agents with tool use**, built without relying on high-level frameworks like LangChain or LlamaIndex.
 
-The goal was to create an agent that doesn't just talk, but actually **executes actions** to find information or perform tasks. It uses a manual implementation of the reasoning loop, where the LLM decides which tool to use, processes the output, and continues until it finds the final answer.
+The goal was to understand how agents work under the hood — by implementing the **ReAct (Reason + Act)** pattern manually:
 
-Everything runs locally, ensuring privacy and a deep understanding of the agentic workflow:
+- The LLM decides which tool to use and responds in structured JSON
+- The backend parses that JSON, executes the real tool, and feeds the result back
+- The loop continues until the model produces a final answer
 
-- **Pure Implementation:** Manual ReAct loop without LangChain or similar abstractions.
-- **Real-time Tools:** Execution of Web Search, Calculator, and File Reader.
-- **Modern Stack:** FastAPI-based backend and React 19 + Vite frontend.
+Runs locally via **Ollama** or in the cloud via **Groq** (free tier).
 
 ---
 
 ## ⚡ How It Works
 
 ```
-User question
-     ↓
-LLM Reason (Thought)
-     ↓
-Action Selection (Tool Call)
-     ↓
-Tool Execution (Web, Calc, etc.)
-     ↓
-Observation (Tool Output)
-     ↓
-LLM Final Answer (Result)
+User sends a message
+        ↓
+Backend sends full conversation history to the LLM
+        ↓
+Model replies with JSON → {"tool": "web_search", "input": "..."}
+        ↓
+Backend parses JSON and executes the tool
+        ↓
+Result is injected back into the conversation
+        ↓
+Model replies again → {"tool": "respond", "input": "final answer"}
+        ↓
+Frontend displays the answer + tool badges
 ```
 
 ---
 
 ## ✨ Features
 
-- 🛠 **Manual ReAct Pattern** — Implementation of the reasoning loop from scratch for full control.
-- 🌐 **Web Search Tool** — Integrated with DuckDuckGo to find real-time information.
-- 🔢 **Calculator Tool** — Accurate mathematical operations performed via code execution.
-- 📂 **File Reader** — Capability to read and process local files for context.
-- 🚀 **FastAPI Backend** — Lightweight and fast API to handle agent logic.
-- 💻 **React UI** — Modern and responsive chat interface built with React 19 and Vite.
-- 🔒 **100% Local** — Powered by Ollama, ensuring your data never leaves your machine.
-- ⚡ **Real-time Interaction** — Seamless communication between the frontend and the agentic backend.
+- 🔍 **Web search** — real-time DuckDuckGo search, no API key required
+- ➗ **Safe calculator** — evaluates math expressions using AST parsing, never `eval()`
+- 📄 **File reader** — reads local `.txt`, `.md`, `.py`, `.json`, `.csv` files securely
+- 🔁 **ReAct loop** — iterative Reason → Act → Observe cycle, up to 6 steps
+- 🧩 **Manual tool use** — no SDK abstractions, fully hand-rolled JSON parsing
+- 🛡️ **Robust parsing** — handles markdown code blocks, surrounding text, malformed JSON
+- 💬 **Session memory** — conversation history preserved per session (last 20 messages)
+- 🏷️ **Tool badges** — frontend shows which tools were used for each response
+- ⚡ **Thinking indicator** — animated dots while the agent is reasoning
+- 💡 **Suggestion chips** — quick-start prompts on empty state
+- 🎨 **Dark glassmorphism UI** — anime-inspired interface with animated background
 
 ---
 
@@ -72,77 +78,75 @@ LLM Final Answer (Result)
 
 | Technology | Role |
 |---|---|
-| [React](https://react.dev/) | Frontend UI (Vite) |
-| [FastAPI](https://fastapi.tiangolo.com/) | Backend API |
-| [Ollama](https://ollama.com/) | Local LLM Engine |
-| [DuckDuckGo Search](https://pypi.org/project/duckduckgo-search/) | Web search capability |
-| [Pydantic](https://docs.pydantic.dev/) | Data validation |
-| [Uvicorn](https://www.uvicorn.org/) | ASGI Server |
+| [Ollama](https://ollama.com/) — `llama3.2` | Local LLM (development) |
+| [Groq](https://groq.com/) — `llama-3.1-8b-instant` | Cloud LLM (production, free tier) |
+| [FastAPI](https://fastapi.tiangolo.com/) | REST API backend |
+| [React](https://react.dev/) + [Vite](https://vitejs.dev/) | Frontend interface |
+| [DuckDuckGo Search](https://pypi.org/project/duckduckgo-search/) | Free web search tool |
+| [Railway](https://railway.app/) | Backend deployment |
+| [Vercel](https://vercel.com/) | Frontend deployment |
 
 ---
 
 ## 📦 Prerequisites
 
 - [Python 3.11+](https://www.python.org/)
-- [Node.js & npm](https://nodejs.org/)
-- [Ollama](https://ollama.com/) installed and running locally
+- [Node.js 18+](https://nodejs.org/)
+- [Ollama](https://ollama.com/) (for local development)
+- [Groq API Key](https://console.groq.com/) (free, for production)
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Pull the required model
-
-```bash
-ollama pull llama3.2 # Or your preferred model
-```
-
-### 2. Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/EduhxH/IA-agent-with-tools---.git
 cd IA-agent-with-tools---/agente-ia-local
 ```
 
-### 3. Setup Backend
+### 2. Backend setup
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate # Linux/Mac
-# .venv\Scripts\activate # Windows
 pip install -r requirements.txt
 ```
 
-### 4. Setup Frontend
+Create a `.env` file inside `backend/`:
+
+```env
+# Local development
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.2
+
+# Production (Groq)
+GROQ_API_KEY=your_key_here
+OLLAMA_MODEL=llama-3.1-8b-instant
+```
+
+### 3. Start Ollama (local development only)
+
+```bash
+ollama pull llama3.2
+ollama serve
+```
+
+### 4. Run the backend
+
+```bash
+uvicorn api.app:app --reload --port 8000
+```
+
+### 5. Run the frontend
 
 ```bash
 cd ../frontend
 npm install
-```
-
-### 5. Run the Project
-
-**Start Backend:**
-```bash
-cd backend
-uvicorn api.main:app --reload
-```
-
-**Start Frontend:**
-```bash
-cd frontend
 npm run dev
 ```
 
----
-
-## ☁️ Deployment
-
-This project is deployed on:
-
-- **Frontend (Vercel):** [https://ia-agent-with-tools-jz1bec9da-eduhxhs-projects.vercel.app/](https://ia-agent-with-tools-jz1bec9da-eduhxhs-projects.vercel.app/)
-- **Backend (Railway):** [ia-agent-with-tools-production.up.railway.app](ia-agent-with-tools-production.up.railway.app)
+> ✅ App running at `http://localhost:5173`
 
 ---
 
@@ -152,36 +156,94 @@ This project is deployed on:
 agente-ia-local/
 │
 ├── backend/
-│   ├── agent/              # ReAct loop logic
-│   ├── api/                # FastAPI routes & setup
-│   ├── tools/              # Tool implementations (search, calc, etc.)
-│   ├── .env                # Configuration
-│   └── requirements.txt    # Python dependencies
+│   ├── agent/
+│   │   ├── agent.py            # ReAct loop — reason, act, observe
+│   │   └── ollama_client.py    # HTTP client for Ollama/Groq API
+│   │
+│   ├── tools/
+│   │   ├── __init__.py         # Tool registry and dispatcher
+│   │   ├── web_search.py       # DuckDuckGo search tool
+│   │   ├── calculator.py       # AST-based safe math evaluator
+│   │   └── file_reader.py      # Sandboxed local file reader
+│   │
+│   ├── api/
+│   │   └── app.py              # FastAPI routes + CORS + session management
+│   │
+│   ├── Procfile                # Railway deployment config
+│   ├── requirements.txt        # Python dependencies
+│   └── .env                    # Environment variables (not committed)
 │
-├── frontend/
-│   ├── src/                # React components & logic
-│   ├── public/             # Static assets
-│   ├── package.json        # JS dependencies
-│   └── vite.config.js      # Vite configuration
-│
-└── .gitignore
+└── frontend/
+    └── src/
+        ├── components/
+        │   ├── Chat.jsx         # Main chat interface
+        │   └── ToolBadge.jsx    # Visual badge for tool calls
+        ├── App.jsx
+        └── index.css            # Glassmorphism dark theme
 ```
+
+---
+
+## 🌐 Deploy
+
+### Backend — Railway
+
+1. Connect your GitHub repository on [railway.app](https://railway.app)
+2. Set **Root Directory** to `agente-ia-local/backend`
+3. Add environment variables:
+   - `GROQ_API_KEY` = your Groq key
+   - `OLLAMA_MODEL` = `llama-3.1-8b-instant`
+4. Deploy — Railway detects the `Procfile` automatically
+
+### Frontend — Vercel
+
+1. Import your repository on [vercel.com](https://vercel.com)
+2. Set **Root Directory** to `agente-ia-local/frontend`
+3. Add environment variable:
+   - `VITE_API_URL` = your Railway backend URL
+4. Deploy
+
+---
+
+## ⚠️ Common Issues
+
+**Agent not responding / 500 error**
+
+Check Railway logs. Most common causes:
+- `GROQ_API_KEY` missing or invalid
+- Model name changed — check [Groq deprecations](https://console.groq.com/docs/deprecations)
+
+**429 Too Many Requests**
+
+Groq free tier has rate limits. Wait 1-2 minutes between requests during testing.
+
+**CORS error on frontend**
+
+Make sure `app.py` has `allow_credentials=False` and `allow_origins=["*"]`.
 
 ---
 
 ## 🧠 What I Learned
 
-- Deep understanding of the **ReAct pattern** and agentic reasoning.
-- How to implement a tool-calling loop manually using system prompts.
-- Integrating local LLMs (Ollama) with a web application.
-- Building a decoupled architecture with **FastAPI** and **React**.
-- Handling asynchronous tool execution and state management in the UI.
-- Prompt engineering for consistent JSON/Structured outputs from LLMs.
+- How to implement the ReAct pattern from scratch without SDKs
+- Why tool results are injected as `role: user` messages (no native `role: tool` in most APIs)
+- How to build a robust JSON parser for LLM responses that don't always follow instructions
+- How to switch between local LLMs (Ollama) and cloud APIs (Groq) with minimal code changes
+- How to deploy a Python backend on Railway and a React frontend on Vercel
+- Why API keys should never be committed to Git
 
 ---
 
-<div align="center">
+## 🔮 Future Improvements
 
-Made with 💜 by [EduhxH](https://github.com/EduhxH)
+- [ ] ChromaDB integration for long-term memory
+- [ ] Streaming responses token by token
+- [ ] More tools (image generation, code execution)
+- [ ] Authentication system
 
-</div>
+---
+
+## 👤 Author
+
+**Eduardo Carvalho** — Escola Secundária de Fesco  
+Projeto desenvolvido no âmbito da disciplina de Informática · 2025/2026
