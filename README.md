@@ -243,7 +243,8 @@ Make sure `app.py` has `allow_credentials=False` and `allow_origins=["*"]`.
 
 ---
 
-## 👤 Author
+<div align="center">
 
-**Eduardo Carvalho** — Escola Secundária de Fesco  
-Projeto desenvolvido no âmbito da disciplina de Informática · 2025/2026
+Made with 💜 by [EduhxH](https://github.com/EduhxH)
+
+</div>
