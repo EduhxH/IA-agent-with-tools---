@@ -1,3 +1,5 @@
+<div align="center">
+
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
@@ -14,15 +16,21 @@ No cloud SDKs. **No LangChain.** Just pure ReAct pattern implementation.
 
 [How It Works](#-how-it-works) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Deployment](#-deployment) • [Project Structure](#-project-structure)
 
+</div>
+
 ---
 
 ## 🧩 About the Project
+
+<div align="center">
 
 This project is a deep dive into the **ReAct (Reasoning and Acting)** pattern, built from scratch without relying on high-level AI frameworks like LangChain.
 
 The goal was to create an agent that doesn't just talk, but actually **executes actions** to find information or perform tasks. It uses a manual implementation of the reasoning loop, where the LLM decides which tool to use, processes the output, and continues until it finds the final answer.
 
 Everything runs locally via **Ollama**, ensuring privacy and a deep understanding of the agentic workflow:
+
+</div>
 
 - **Pure Implementation:** Manual ReAct loop without LangChain or similar abstractions.
 - **Real-time Tools:** Execution of Web Search, Calculator, and File Reader.
@@ -32,6 +40,8 @@ Everything runs locally via **Ollama**, ensuring privacy and a deep understandin
 ---
 
 ## ⚡ How It Works
+
+<div align="center">
 
 ```
 User question
@@ -49,22 +59,32 @@ LLM Final Answer (Result)
 
 The backend exposes a `/chat` endpoint. On each request, the agent runs the full ReAct loop — reasoning, selecting a tool, executing it, and feeding the result back into the LLM — until a final answer is reached.
 
+</div>
+
 ---
 
 ## ✨ Features
 
-- 🛠 **Manual ReAct Pattern** — Reasoning loop implemented from scratch for full control.
-- 🌐 **Web Search Tool** — Integrated with DuckDuckGo to find real-time information.
-- 🔢 **Calculator Tool** — Accurate mathematical operations performed via code execution.
-- 📂 **File Reader** — Reads and processes local files for context injection.
-- 🚀 **FastAPI Backend** — Lightweight and fast API handling all agent logic.
-- 💻 **React UI** — Modern and responsive chat interface built with React 19 and Vite.
-- 🔒 **100% Local** — Powered by Ollama; your data never leaves your machine.
-- ⚡ **Real-time Interaction** — Seamless communication between frontend and the agentic backend.
+<div align="center">
+
+| | Feature | Description |
+|---|---|---|
+| 🛠 | **Manual ReAct Pattern** | Reasoning loop implemented from scratch for full control |
+| 🌐 | **Web Search Tool** | Integrated with DuckDuckGo to find real-time information |
+| 🔢 | **Calculator Tool** | Accurate mathematical operations performed via code execution |
+| 📂 | **File Reader** | Reads and processes local files for context injection |
+| 🚀 | **FastAPI Backend** | Lightweight and fast API handling all agent logic |
+| 💻 | **React UI** | Modern and responsive chat interface built with React 19 and Vite |
+| 🔒 | **100% Local** | Powered by Ollama; your data never leaves your machine |
+| ⚡ | **Real-time Interaction** | Seamless communication between frontend and the agentic backend |
+
+</div>
 
 ---
 
 ## 🛠 Tech Stack
+
+<div align="center">
 
 | Technology | Role |
 |---|---|
@@ -75,13 +95,19 @@ The backend exposes a `/chat` endpoint. On each request, the agent runs the full
 | [Pydantic](https://docs.pydantic.dev/) | Data validation |
 | [Uvicorn](https://www.uvicorn.org/) | ASGI Server |
 
+</div>
+
 ---
 
 ## 📦 Prerequisites
 
+<div align="center">
+
 - [Python 3.11+](https://www.python.org/)
 - [Node.js & npm](https://nodejs.org/)
 - [Ollama](https://ollama.com/) installed and running locally
+
+</div>
 
 ---
 
@@ -135,31 +161,49 @@ cd frontend
 npm run dev
 ```
 
+<div align="center">
+
 The frontend will be available at `http://localhost:5173` and the backend at `http://localhost:8000`.
+
+</div>
 
 ---
 
 ## ⚙️ Configuration
 
-The backend reads configuration from environment variables. You can set them in a `.env` file inside `backend/`:
+<div align="center">
+
+The backend reads configuration from environment variables. Create a `.env` file inside `backend/`:
+
+</div>
 
 ```env
 OLLAMA_BASE_URL=http://localhost:11434   # Default Ollama address
 OLLAMA_MODEL=llama3.2                    # Model to use for inference
 ```
 
+<div align="center">
+
 No API keys required — everything runs locally through Ollama.
+
+</div>
 
 ---
 
 ## ☁️ Deployment
 
+<div align="center">
+
 This project is also deployed on:
 
-- **Frontend (Vercel):** [ia-agent-with-tools.vercel.app](https://ia-agent-with-tools.vercel.app)
-- **Backend (Railway):** [ia-agent-with-tools-production.up.railway.app](https://ia-agent-with-tools-production.up.railway.app)
+| | Platform | URL |
+|---|---|---|
+| 🌐 | **Frontend (Vercel)** | [ia-agent-with-tools.vercel.app](https://ia-agent-with-tools.vercel.app) |
+| 🚂 | **Backend (Railway)** | [ia-agent-with-tools-production.up.railway.app](https://ia-agent-with-tools-production.up.railway.app) |
 
 > ⚠️ The deployed version connects to a remote LLM provider. Local setup uses Ollama for full privacy.
+
+</div>
 
 ---
 
@@ -192,6 +236,8 @@ agente-ia-local/
 
 ## 🧠 What I Learned
 
+<div align="center">
+
 - Deep understanding of the **ReAct pattern** and agentic reasoning loops.
 - How to implement a tool-calling loop manually using system prompts.
 - Integrating local LLMs via **Ollama's HTTP API** without any SDK abstraction.
@@ -202,3 +248,5 @@ agente-ia-local/
 ---
 
 Made with 💜 by [EduhxH](https://github.com/EduhxH)
+
+</div>
