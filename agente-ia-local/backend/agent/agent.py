@@ -3,9 +3,15 @@ import re
 from agent.ollama_client import chat
 from tools import TOOLS_DESCRIPTION, execute_tool
 
-SYSTEM_PROMPT = f"""You are a helpful and honest AI agent.
+SYSTEM_PROMPT = f"""You are a helpful and honest AI agent with a persistent knowledge base.
+
 {TOOLS_DESCRIPTION}
-Think step by step. Be concise and direct in your final answers."""
+
+Follow these rules:
+1. Before answering any question, call query_pinecone to check for relevant stored context.
+2. After receiving new information from the user or producing a useful result, call upsert_pinecone to store it.
+3. Think step by step. Be concise and direct in your final answers."""
+
 
 def parse_tool_call(text: str) -> dict | None:
     text = text.strip()
@@ -21,9 +27,10 @@ def parse_tool_call(text: str) -> dict | None:
         if match:
             try:
                 return json.loads(match.group())
-            except:
+            except Exception:
                 pass
     return None
+
 
 def run_agent(user_message: str, history: list) -> dict:
     messages = history.copy()
@@ -57,7 +64,7 @@ def run_agent(user_message: str, history: list) -> dict:
                 "history": messages
             }
 
-        print(f"[tool] {tool_name}({tool_input[:50]})")
+        print(f"[tool] {tool_name}({str(tool_input)[:50]})")
         result = execute_tool(tool_name, tool_input)
 
         tool_calls_log.append({
@@ -69,7 +76,7 @@ def run_agent(user_message: str, history: list) -> dict:
         messages.append({"role": "assistant", "content": response})
         messages.append({
             "role": "user",
-            "content": f"[Resultado da ferramenta {tool_name}]: {result}"
+            "content": f"[Tool result - {tool_name}]: {result[:2000]}"
         })
 
     final = "Reached the step limit. Summary of what I found: " + \

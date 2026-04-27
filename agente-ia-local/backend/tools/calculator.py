@@ -11,24 +11,26 @@ ALLOWED_OPS = {
     ast.USub: operator.neg,
 }
 
+
 def safe_eval(node):
-    if isinstance(node, ast.Num):
-        return node.n
+    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+        return node.value
     elif isinstance(node, ast.BinOp):
         op = ALLOWED_OPS.get(type(node.op))
         if op is None:
-            raise ValueError("Operação não permitida")
+            raise ValueError("Operation not allowed")
         return op(safe_eval(node.left), safe_eval(node.right))
     elif isinstance(node, ast.UnaryOp):
         op = ALLOWED_OPS.get(type(node.op))
         return op(safe_eval(node.operand))
     else:
-        raise ValueError(f"Expressão não suportada: {type(node)}")
+        raise ValueError(f"Unsupported expression: {type(node)}")
+
 
 def calculator(expression: str) -> str:
     try:
-        tree = ast.parse(expression, mode='eval')
+        tree = ast.parse(expression, mode="eval")
         result = safe_eval(tree.body)
-        return f"Resultado: {result}"
+        return f"Result: {result}"
     except Exception as e:
-        return f"Erro no cálculo: {str(e)}"
+        return f"Calculation error: {str(e)}"

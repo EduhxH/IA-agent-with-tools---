@@ -14,12 +14,29 @@ export function Chat() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [sessionId] = useState(() => `session_${Date.now()}`)
+  const [workspace, setWorkspace] = useState("")
+  const [workspaceInput, setWorkspaceInput] = useState("")
+  const [showWorkspace, setShowWorkspace] = useState(false)
+  const [uploadedFiles, setUploadedFiles] = useState([])
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, loading])
+
+  useEffect(() => {
+    fetch(`${API}/workspace`)
+      .then(r => r.json())
+      .then(d => { setWorkspace(d.workspace); setWorkspaceInput(d.workspace) })
+      .catch(() => {})
+
+    fetch(`${API}/uploads`)
+      .then(r => r.json())
+      .then(d => setUploadedFiles(d.files || []))
+      .catch(() => {})
+  }, [])
 
   async function send(text) {
     const msg = (text || input).trim()
@@ -58,9 +75,63 @@ export function Chat() {
     setMessages([])
   }
 
+  async function handleUpload(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const form = new FormData()
+    form.append("file", file)
+    try {
+      const res = await fetch(`${API}/upload`, { method: "POST", body: form })
+      const data = await res.json()
+      setUploadedFiles(prev => [...new Set([...prev, data.filename])])
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: `File uploaded: ${data.filename}. You can now ask me to read it.`,
+      }])
+    } catch {
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "Failed to upload file.",
+        isError: true
+      }])
+    }
+    e.target.value = ""
+  }
+
+  async function saveWorkspace() {
+    if (!workspaceInput.trim()) return
+    try {
+      const res = await fetch(`${API}/workspace`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: workspaceInput.trim() })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setMessages(prev => [...prev, {
+          role: "assistant",
+          content: `Invalid path: ${data.detail}`,
+          isError: true
+        }])
+        return
+      }
+      setWorkspace(data.workspace)
+      setShowWorkspace(false)
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: `Workspace set to: ${data.workspace}. You can now ask me to read files from this project.`,
+      }])
+    } catch {
+      setMessages(prev => [...prev, {
+        role: "assistant",
+        content: "Failed to update workspace.",
+        isError: true
+      }])
+    }
+  }
+
   return (
     <div className="layout">
-      {/* Animated background blobs */}
       <div className="bg-blob blob-1" />
       <div className="bg-blob blob-2" />
       <div className="bg-blob blob-3" />
@@ -80,12 +151,75 @@ export function Chat() {
               </p>
             </div>
           </div>
-          {messages.length > 0 && (
-            <button className="btn-clear" onClick={clearChat} title="Clear chat">
-              ✕ Clear
+          <div className="header-actions">
+            {/* Upload button */}
+            <button
+              className="btn-action"
+              onClick={() => fileInputRef.current?.click()}
+              title="Upload file for the agent to read"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              Upload File
             </button>
-          )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleUpload}
+            />
+
+            {/* Workspace button */}
+            <button
+              className="btn-action"
+              onClick={() => setShowWorkspace(prev => !prev)}
+              title="Set project workspace for the agent to read"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+              Set Project
+            </button>
+
+            {messages.length > 0 && (
+              <button className="btn-clear" onClick={clearChat} title="Clear chat">
+                ✕ Clear
+              </button>
+            )}
+          </div>
         </header>
+
+        {/* Workspace panel */}
+        {showWorkspace && (
+          <div className="workspace-panel">
+            <p className="workspace-label">
+              Current workspace: <code>{workspace || "not set"}</code>
+            </p>
+            <div className="workspace-input-row">
+              <input
+                className="workspace-input"
+                value={workspaceInput}
+                onChange={e => setWorkspaceInput(e.target.value)}
+                placeholder="C:\Users\Yor\Documents\my-project"
+                onKeyDown={e => e.key === "Enter" && saveWorkspace()}
+              />
+              <button className="btn-save" onClick={saveWorkspace}>
+                Save
+              </button>
+            </div>
+            {uploadedFiles.length > 0 && (
+              <div className="uploaded-files">
+                <p className="workspace-label">Uploaded files:</p>
+                {uploadedFiles.map((f, i) => (
+                  <span key={i} className="file-chip">{f}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Messages area */}
         <div className="messages-area">
