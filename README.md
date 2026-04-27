@@ -6,6 +6,8 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Ollama](https://img.shields.io/badge/Ollama-Local%20LLM-000000?style=for-the-badge)
+![Pinecone](https://img.shields.io/badge/Pinecone-Vector%20DB-000000?style=for-the-badge&logo=pinecone&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-Frontend-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow?style=for-the-badge)
 
@@ -88,12 +90,12 @@ Now integrated with the **Model Context Protocol (MCP)**, the agent can leverage
 | Icon | Feature | Description |
 |:---:|:---|:---|
 | 🛠 | **Manual ReAct Pattern** | Reasoning loop implemented from scratch — no abstractions |
+| 📂 | **Smart File Upload** | New frontend button to upload files directly; agent reads them using `file_reader.py` |
+| 💻 | **IDE Project Reader** | Advanced feature to read any local project by setting the `workspace_root` path |
 | 🌐 | **Web Search Tool** | Real-time search powered by DuckDuckGo |
 | 🔢 | **Calculator Tool** | Accurate math operations executed via code |
-| 📂 | **File Reader** | Reads and injects local file content as context |
 | 🔌 | **MCP Integration** | Professional tools via [MCP-SERVER-PRO](https://github.com/EduhxH/MCP-SERVER-PRO) |
 | 🚀 | **FastAPI Backend** | Lightweight, async API handling all agent logic |
-| 💻 | **React 19 UI** | Modern, responsive chat interface built with Vite |
 | 🔒 | **100% Local** | Powered by Ollama — data never leaves your machine |
 
 </div>
@@ -112,11 +114,11 @@ Now integrated with the **Model Context Protocol (MCP)**, the agent can leverage
 
 | Technology | Role |
 |:---:|:---|
-| [React 19](https://react.dev/) | Frontend UI |
+| [React 19](https://react.dev/) | Frontend UI with new File/IDE integration buttons |
 | [Vite](https://vitejs.dev/) | Frontend build tool |
 | [FastAPI](https://fastapi.tiangolo.com/) | Backend API framework |
 | [Ollama](https://ollama.com/) | Local LLM engine |
-| [MCP](https://modelcontextprotocol.io/) | Model Context Protocol |
+| [MCP](https://modelcontextprotocol.io/) | Model Context Protocol integration |
 | [DuckDuckGo Search](https://pypi.org/project/duckduckgo-search/) | Web search capability |
 | [Pydantic](https://docs.pydantic.dev/) | Data validation |
 
@@ -221,6 +223,7 @@ The backend is configured via environment variables. Create a `.env` file inside
 ```env
 OLLAMA_BASE_URL=http://localhost:11434   # default Ollama address
 OLLAMA_MODEL=llama3.2                    # model used for inference
+WORKSPACE_ROOT=C:/your/project/path      # configurable path for IDE reader
 ```
 
 > No API keys required. Everything runs locally through Ollama.
@@ -267,11 +270,11 @@ agente-ia-local/
 │   │   └── ollama_client.py    # Ollama HTTP client
 │   ├── api/
 │   │   └── app.py              # FastAPI routes & app setup
-│   ├── tools/                  # Core tool implementations
+│   ├── tools/                  # Core tool implementations (file_reader.py, etc.)
 │   └── requirements.txt
 │
 ├── frontend/
-│   ├── src/                    # React components & logic
+│   ├── src/                    # React components with Upload/IDE UI
 │   └── vite.config.js
 │
 └── .gitignore
@@ -288,8 +291,9 @@ agente-ia-local/
 - The inner workings of the **ReAct pattern** and how agentic reasoning loops are structured.
 - Manual tool-calling implementation using structured system prompts.
 - Integration with the **Model Context Protocol (MCP)** for professional toolsets.
+- Implementing **File Upload** logic to allow agents to process user-provided data.
+- Creating a **Dynamic IDE Reader** to allow AI interaction with any local workspace.
 - Designing a clean, decoupled architecture with **FastAPI** and **React 19**.
-- Managing asynchronous tool execution and UI state in a real-time chat interface.
 
 <br>
 
@@ -302,3 +306,4 @@ agente-ia-local/
 Made with 💜 by [EduhxH](https://github.com/EduhxH)
 
 </div>
+
