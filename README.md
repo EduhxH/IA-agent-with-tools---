@@ -14,7 +14,7 @@
 # 🤖 Local AI Agent with Tool Use
 
 ### An autonomous AI agent with tool use capabilities running 100% locally.
-### No cloud SDKs. No LangChain. Just pure ReAct pattern implementation.
+### Enhanced with [MCP-SERVER-PRO](https://github.com/EduhxH/MCP-SERVER-PRO) for professional tool integration.
 
 <br>
 
@@ -38,7 +38,7 @@ This project is a deep dive into the **ReAct (Reasoning and Acting)** pattern �
 
 The goal was to create an agent that doesn't just talk, but actually **executes actions** to find information and perform tasks. It uses a manual implementation of the reasoning loop, where the LLM decides which tool to invoke, processes the output, and continues reasoning until it reaches a final answer.
 
-Everything runs locally via **Ollama**, ensuring full privacy and a transparent understanding of how agentic systems work under the hood.
+Now integrated with the **Model Context Protocol (MCP)**, the agent can leverage professional-grade tools via [MCP-SERVER-PRO](https://github.com/EduhxH/MCP-SERVER-PRO) for database management, spreadsheet manipulation, and more.
 
 <br>
 
@@ -59,7 +59,7 @@ Everything runs locally via **Ollama**, ensuring full privacy and a transparent 
                ↓
    Action Selection (Tool Call)
                ↓
-  Tool Execution (Web / Calc / File)
+  Tool Execution (Local / MCP)
                ↓
      Observation (Tool Output)
                ↓
@@ -91,10 +91,10 @@ Everything runs locally via **Ollama**, ensuring full privacy and a transparent 
 | 🌐 | **Web Search Tool** | Real-time search powered by DuckDuckGo |
 | 🔢 | **Calculator Tool** | Accurate math operations executed via code |
 | 📂 | **File Reader** | Reads and injects local file content as context |
+| 🔌 | **MCP Integration** | Professional tools via [MCP-SERVER-PRO](https://github.com/EduhxH/MCP-SERVER-PRO) |
 | 🚀 | **FastAPI Backend** | Lightweight, async API handling all agent logic |
 | 💻 | **React 19 UI** | Modern, responsive chat interface built with Vite |
 | 🔒 | **100% Local** | Powered by Ollama — data never leaves your machine |
-| ⚡ | **Real-time Interaction** | Seamless frontend ↔ backend communication |
 
 </div>
 
@@ -116,9 +116,9 @@ Everything runs locally via **Ollama**, ensuring full privacy and a transparent 
 | [Vite](https://vitejs.dev/) | Frontend build tool |
 | [FastAPI](https://fastapi.tiangolo.com/) | Backend API framework |
 | [Ollama](https://ollama.com/) | Local LLM engine |
+| [MCP](https://modelcontextprotocol.io/) | Model Context Protocol |
 | [DuckDuckGo Search](https://pypi.org/project/duckduckgo-search/) | Web search capability |
 | [Pydantic](https://docs.pydantic.dev/) | Data validation |
-| [Uvicorn](https://www.uvicorn.org/) | ASGI server |
 
 </div>
 
@@ -266,16 +266,12 @@ agente-ia-local/
 │   │   ├── agent.py            # ReAct loop logic
 │   │   └── ollama_client.py    # Ollama HTTP client
 │   ├── api/
-│   │   ├── __init__.py
 │   │   └── app.py              # FastAPI routes & app setup
-│   ├── tools/                  # Tool implementations (search, calc, file reader)
-│   ├── .env                    # Local config (not committed)
+│   ├── tools/                  # Core tool implementations
 │   └── requirements.txt
 │
 ├── frontend/
 │   ├── src/                    # React components & logic
-│   ├── public/                 # Static assets
-│   ├── package.json
 │   └── vite.config.js
 │
 └── .gitignore
@@ -290,11 +286,10 @@ agente-ia-local/
 ## 🧠 &nbsp;What I Learned
 
 - The inner workings of the **ReAct pattern** and how agentic reasoning loops are structured.
-- How to build a tool-calling loop manually using carefully engineered system prompts.
-- Integrating local LLMs via **Ollama's HTTP API** — without any SDK abstraction.
-- Designing a clean, decoupled architecture with **FastAPI** and **React**.
+- Manual tool-calling implementation using structured system prompts.
+- Integration with the **Model Context Protocol (MCP)** for professional toolsets.
+- Designing a clean, decoupled architecture with **FastAPI** and **React 19**.
 - Managing asynchronous tool execution and UI state in a real-time chat interface.
-- Prompt engineering techniques for reliable structured outputs from local LLMs.
 
 <br>
 
